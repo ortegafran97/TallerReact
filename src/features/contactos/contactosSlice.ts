@@ -1,13 +1,6 @@
-import {
-  Action,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
-import { count } from "console";
-import { RootState, AppThunk } from "../../app/store";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 import Contacto from "../../Models/Contacto";
-import { fetchContactos } from "./contactosAPI";
 
 import {
   getContactos,
@@ -40,9 +33,11 @@ export const createContactoAsync = createAsyncThunk(
   "contactos/createContacto",
   async (Contactos: Contacto[]) => {
     // const nuevoContacto = await createContacto()
+    // const response = await create
   }
 );
 
+/* SLICE */
 export const contactosSlice = createSlice({
   name: "contactos",
   initialState,
@@ -53,10 +48,12 @@ export const contactosSlice = createSlice({
 
     //TODO DIVIDER (actions)
     deleteContacto: (state, action) => {
-      state.value = state.value;
+      state.value = state.value.filter((e) => e.id !== action.payload.id);
     },
     updateContacto: (state, action) => {
-      state.value = state.value;
+      state.value = state.value.map((c) => {
+        return c.id !== action.payload.id ? c : action.payload;
+      });
     },
   },
   extraReducers: (builder) => {
@@ -71,11 +68,20 @@ export const contactosSlice = createSlice({
           state.value = action.payload;
         }
       );
+    // .addCase(,);
   },
 });
 
-export const { addContacto, deleteContacto } = contactosSlice.actions;
+export const { addContacto, deleteContacto, updateContacto } =
+  contactosSlice.actions;
 
 export const selectContactos = (state: RootState) => state.contactos.value;
+
+/* Funciones async */
+export const newContacto = async (contacto: Contacto): Promise<Contacto> => {
+  const res = await createContacto(contacto);
+
+  return res;
+};
 
 export default contactosSlice.reducer;

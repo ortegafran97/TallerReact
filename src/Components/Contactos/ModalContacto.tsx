@@ -5,12 +5,12 @@ import * as formTypes from "../../features/constants/FormVisualizationTypes";
 
 import { useAppDispatch } from "../../app/hooks";
 
+import * as ContactosService from "../../Services/contactosService";
 import {
-  createContacto,
-  editContacto,
+  addContacto,
+  updateContacto,
   deleteContacto,
-} from "../../Services/contactosService";
-import { addContacto } from "../../features/contactos/contactosSlice";
+} from "../../features/contactos/contactosSlice";
 
 /** Este modal va a ser reutilizable para:
  * Ver
@@ -35,27 +35,37 @@ const ModalContacto = ({
 }: Props) => {
   const dispatch = useAppDispatch();
 
+  // const [disabled, setDisabled] = useState(false);
+  let disabled = false;
+
   useEffect(() => {}, []);
 
   let titulo = "Datos de contacto";
-  let disabled = false;
   switch (modo) {
     case formTypes.CREATE:
       titulo = "Crear contacto";
+      // setDisabled(false);
+      disabled = false;
       break;
 
     case formTypes.EDIT:
       titulo = "Editar contacto";
+      // setDisabled(false);
+      disabled = false;
+
       break;
 
     case formTypes.DELETE:
       titulo = "Eliminar contacto";
+      // setDisabled(true);
       disabled = true;
+
       break;
 
     case formTypes.VIEW:
       titulo = "Datos de contacto";
       disabled = true;
+      // setDisabled(true);
       break;
 
     default:
@@ -68,26 +78,22 @@ const ModalContacto = ({
   };
 
   const handleSubmit = async (e: any) => {
-      e.preventDefault();
-    console.log(
-      `HANDLE SUBMIT \n modo:${modo} \n contacto: ${contacto.apellido}, ${contacto.id},${contacto.nombre},${contacto.telefono}, `
-    );
-
+    e.preventDefault();
     switch (modo) {
       case formTypes.CREATE:
-        const nuevo = await createContacto(contacto);
-        console.log(`nuevo contacto ${nuevo}`);
-        dispatch(addContacto(nuevo));
-
+        dispatch(addContacto(await ContactosService.createContacto(contacto)));
         break;
 
       case formTypes.EDIT:
+        dispatch(updateContacto(await ContactosService.editContacto(contacto)));
         break;
 
       case formTypes.DELETE:
-        break;
-
-      case formTypes.VIEW:
+        if (contacto.id) {
+          dispatch(
+            deleteContacto(await ContactosService.deleteContacto(contacto.id))
+          );
+        }
         break;
 
       default:
@@ -108,7 +114,7 @@ const ModalContacto = ({
             <Form.Control
               name="nombre"
               type="text"
-              placeholder="Enter email"
+              placeholder="Ingrese nombre"
               value={contacto.nombre || ""}
               onChange={handleChange}
               disabled={disabled}
@@ -119,7 +125,7 @@ const ModalContacto = ({
             <Form.Control
               name="apellido"
               type="text"
-              placeholder="Ingrese nombre"
+              placeholder="Ingrese apellido"
               value={contacto.apellido || ""}
               onChange={handleChange}
               disabled={disabled}
@@ -160,6 +166,7 @@ const ModalContacto = ({
           ) : (
             <></>
           )}
+
           <Button variant="secondary" onClick={() => closeModal()}>
             Cerrar
           </Button>

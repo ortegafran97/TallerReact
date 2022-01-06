@@ -3,12 +3,16 @@ import { Button, Table } from "react-bootstrap";
 import Contacto from "../../Models/Contacto";
 import { Tools, Trash, Pencil } from "react-bootstrap-icons";
 
+import * as FormViewType from "../../features/constants/FormVisualizationTypes";
+
 interface Props {
   contactos: Contacto[];
   showModal: (c: Contacto, modo: string) => void;
 }
 
-const TableContactos = (props: Props) => {
+const TableContactos = ({ contactos, showModal }: Props) => {
+  if (!contactos) contactos = [];
+
   return (
     <div>
       <Table striped bordered hover>
@@ -24,12 +28,12 @@ const TableContactos = (props: Props) => {
           </tr>
         </thead>
         <tbody>
-          {props.contactos.map((c) => {
+          {contactos.map((c) => {
             return (
               <tr
                 key={c.id}
                 onDoubleClick={() => {
-                  props.showModal(c, "view");
+                  showModal(c, FormViewType.VIEW);
                 }}
               >
                 <td>{c.id}</td>
@@ -39,12 +43,12 @@ const TableContactos = (props: Props) => {
                 <td onClick={undefined}>
                   <Pencil
                     onClick={() => {
-                      props.showModal(c, "edit");
+                      showModal(c, FormViewType.EDIT);
                     }}
                   />
                   <Trash
                     onClick={() => {
-                      props.showModal(c, "delete");
+                      showModal(c, FormViewType.DELETE);
                     }}
                   />
                 </td>

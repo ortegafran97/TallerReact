@@ -32,25 +32,33 @@ export const getContactos = async (
 };
 
 export const getContactoById = async (id: Number): Promise<Contacto> => {
-  const res = await axios.get(`${API}/${id}`);
-  return res.data.content[0];
+  try {
+    const res = await axios.get(`${API}/${id}`);
+    return res.data.content[0];
+  } catch (e) {
+    return { id: -1, nombre: "", apellido: "", telefono: "" };
+  }
 };
 
 export const createContacto = async (contacto: Contacto): Promise<Contacto> => {
-  console.log(`CREATE CONTACTO: ${contacto}`);
-
-  const res = await axios.post(API, contacto, {
-    headers: {  },
-  });
+  const res = await axios.post(API, contacto, {});
   return res.data;
 };
 
 export const editContacto = async (contacto: Contacto): Promise<Contacto> => {
-  const res = await axios.put(API, contacto);
-  return res.data;
+  try {
+    const res = await axios.put(`${API}/${contacto.id}`, contacto, {});
+    return res.data;
+  } catch (e) {
+    return { id: -1, nombre: "", apellido: "", telefono: "" };
+  }
 };
 
 export const deleteContacto = async (id: Number): Promise<Contacto> => {
-  const res = await axios.delete(`${API}/${id}`);
-  return res.data;
+  try {
+    const res = await axios.delete(`${API}/${id}`);
+    return res.data;
+  } catch (e) {
+    return { id: -1, nombre: "", apellido: "", telefono: "" };
+  }
 };
