@@ -1,12 +1,21 @@
-import Contacto from './Contacto'
+import Contacto from "./Contacto";
 
-interface Vehiculo{
-    id: Number,
-    marca: String,
-    modelo: String,
-    anio: Number,
-    patente: String
-    contacto: Contacto,
+interface Vehiculo {
+  id?: number;
+  patente: string;
+  marca: string;
+  modelo: string;
+  anio?: number;
+  contacto?: Contacto;
 }
+
+export const initialStateVehiculo: Vehiculo = {
+  id: undefined,
+  marca: "",
+  modelo: "",
+  anio: undefined,
+  patente: "",
+  contacto: undefined,
+};
 
 export default Vehiculo;

@@ -3,15 +3,17 @@ export const ADD_CONTACTO = 'ADD_CONTACTO';
 export const DELETE_CONTACTO = 'DELETE_CONTACTO';
 export const EDIT_CONTACTO = 'EDIT_CONTACTO';
 
+export const GET_VEHICULOS = 'GET_VEHICULOS';
 export const ADD_VEHICULO = 'ADD_VEHICULO'
 export const DELETE_VEHICULO = 'DELETE_VEHICULO'
 export const EDIT_VEHICULO = 'EDIT_VEHICULO'
 
-
+export const GET_INGRESOS = 'GET_INGRESOS'
 export const ADD_INGRESO = 'ADD_INGRESO'
 export const DELETE_INGRESO = 'DELETE_INGRESO'
 export const EDIT_INGRESO = 'EDIT_INGRESO'
 
+export const GET_ITEMS = 'GET_ITEMS'
 export const ADD_ITEM = 'ADD_ITEM'
 export const DELETE_ITEM = 'DELETE_ITEM'
 export const EDIT_ITEM = 'EDIT_ITEM'

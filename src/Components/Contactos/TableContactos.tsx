@@ -5,9 +5,11 @@ import { Tools, Trash, Pencil } from "react-bootstrap-icons";
 
 import * as FormViewType from "../../features/constants/FormVisualizationTypes";
 
+/* TODO: eliminar columna ID */
+
 interface Props {
   contactos: Contacto[];
-  showModal: (c: Contacto, modo: string) => void;
+  showModal: (modo: string, c?: Contacto) => void;
 }
 
 const TableContactos = ({ contactos, showModal }: Props) => {
@@ -19,8 +21,8 @@ const TableContactos = ({ contactos, showModal }: Props) => {
         <thead>
           <tr>
             <th>id</th>
-            <th>Nombre</th>
             <th>Apellido</th>
+            <th>Nombre</th>
             <th>Telefono</th>
             <th>
               <Tools />
@@ -33,22 +35,22 @@ const TableContactos = ({ contactos, showModal }: Props) => {
               <tr
                 key={c.id}
                 onDoubleClick={() => {
-                  showModal(c, FormViewType.VIEW);
+                  showModal(FormViewType.VIEW, c);
                 }}
               >
                 <td>{c.id}</td>
-                <td>{c.nombre}</td>
                 <td>{c.apellido}</td>
+                <td>{c.nombre}</td>
                 <td>{c.telefono}</td>
-                <td onClick={undefined}>
+                <td>
                   <Pencil
                     onClick={() => {
-                      showModal(c, FormViewType.EDIT);
+                      showModal(FormViewType.EDIT, c);
                     }}
                   />
                   <Trash
                     onClick={() => {
-                      showModal(c, FormViewType.DELETE);
+                      showModal(FormViewType.DELETE, c);
                     }}
                   />
                 </td>

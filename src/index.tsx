@@ -8,6 +8,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Contactos } from "./Components/Contactos/Index";
+import Vehiculos from "./Components/Vehiculos/Index";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="contactos" element={<Contactos />} />
+            <Route path="vehiculos" element={<Vehiculos />} />
             <Route path="test" element={<></>} />
           </Route>
         </Routes>

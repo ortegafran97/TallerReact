@@ -99,6 +99,7 @@ const ModalContacto = ({
       default:
         break;
     }
+    closeModal();
   };
 
   return (

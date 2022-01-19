@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
@@ -13,7 +13,7 @@ import ModalContacto from "./ModalContacto";
 
 import TableContactos from "./TableContactos";
 
-import { CREATE } from "../../features/constants/FormVisualizationTypes";
+import { CREATE, VIEW } from "../../features/constants/FormVisualizationTypes";
 
 export function Contactos() {
   /* Redux */
@@ -23,9 +23,9 @@ export function Contactos() {
   /* Modal */
   const [modalContacto, setModalContacto] = useState<Contacto>(initialState);
   const [visibleModal, setVisibleModal] = useState(false);
-  const [modo, setModo] = useState("view");
-  const showModalContacto = (c: Contacto, modo: string) => {
-    setModalContacto(c);
+  const [modo, setModo] = useState(VIEW);
+  const showModalContacto = (modo: string, c?: Contacto) => {
+    setModalContacto(c ? c : initialState);
     setModo(modo);
     setVisibleModal(true);
   };
@@ -38,7 +38,6 @@ export function Contactos() {
 
   return (
     <div>
-      <TableContactos contactos={contactos} showModal={showModalContacto} />
       <ModalContacto
         contacto={modalContacto}
         modo={modo}
@@ -46,14 +45,30 @@ export function Contactos() {
         closeModal={closeModal}
         setNewContacto={setModalContacto}
       />
-
-      <Button
-        onClick={() => {
-          showModalContacto(initialState, CREATE);
-        }}
-      >
-        Crear contacto
-      </Button>
+      <Container>
+        <Row>
+          <Col md={10}>
+            <h2>Lista de contactos</h2>
+          </Col>
+          <Col md={2}>
+            <Button
+              onClick={() => {
+                showModalContacto(CREATE);
+              }}
+            >
+              Crear contacto
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <TableContactos
+              contactos={contactos}
+              showModal={showModalContacto}
+            />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

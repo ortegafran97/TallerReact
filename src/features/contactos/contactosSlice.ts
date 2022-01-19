@@ -29,13 +29,13 @@ export const getContactosAsync = createAsyncThunk(
   }
 );
 
-export const createContactoAsync = createAsyncThunk(
+/* export const createContactoAsync = createAsyncThunk(
   "contactos/createContacto",
   async (Contactos: Contacto[]) => {
     // const nuevoContacto = await createContacto()
     // const response = await create
   }
-);
+); */
 
 /* SLICE */
 export const contactosSlice = createSlice({
@@ -45,8 +45,6 @@ export const contactosSlice = createSlice({
     addContacto: (state, action) => {
       state.value = [...state.value, action.payload];
     },
-
-    //TODO DIVIDER (actions)
     deleteContacto: (state, action) => {
       state.value = state.value.filter((e) => e.id !== action.payload.id);
     },
@@ -68,7 +66,6 @@ export const contactosSlice = createSlice({
           state.value = action.payload;
         }
       );
-    // .addCase(,);
   },
 });
 
