@@ -41,9 +41,6 @@ const Header = () => {
             >
               Vehiculos
             </Link>
-            <Link className="nav-link active" aria-current="page" to="/cont">
-              Contador
-            </Link>
             <Link className="nav-link active" aria-current="page" to="/test">
               Test
             </Link>
