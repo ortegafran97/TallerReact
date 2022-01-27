@@ -3,6 +3,13 @@ import { RootState } from "../../app/store";
 import Vehiculo from "../../Models/Vehiculo";
 import { getVehiculos } from "../../Services/vehiculosService";
 
+interface ThunkClass {
+  vehiculos: Vehiculo[];
+  pageSize?: number;
+  pageNumber?: number;
+  sortBy?: string;
+}
+
 export interface VehiculosState {
   value: Vehiculo[];
   status: "idle" | "loading" | "failed";
@@ -15,8 +22,12 @@ const initialState: VehiculosState = {
 
 export const getVehiculosAsync = createAsyncThunk(
   "vehiculos/fetchVehiculos",
-  async (vehiculos: Vehiculo[]) => {
+  /*   async (vehiculos: Vehiculo[]) => {
     const res = await getVehiculos();
+    return res.content;
+  } */
+  async ({ vehiculos, pageSize, sortBy, pageNumber }: ThunkClass) => {
+    const res = await getVehiculos(pageNumber, pageSize, sortBy);
     return res.content;
   }
 );
@@ -37,6 +48,9 @@ export const vehiculosSlice = createSlice({
         return v.id !== action.payload.id ? v : action.payload;
       });
     },
+    setVehiculos: (state, action) => {
+      state.value = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,7 +67,7 @@ export const vehiculosSlice = createSlice({
   },
 });
 
-export const { addVehiculo, updateVehiculo, deleteVehiculo } =
+export const { addVehiculo, updateVehiculo, deleteVehiculo, setVehiculos } =
   vehiculosSlice.actions;
 
 export const selectVehiculos = (state: RootState) => state.vehiculos.value;

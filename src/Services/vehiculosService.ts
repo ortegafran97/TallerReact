@@ -30,9 +30,6 @@ export const getVehiculos = async (
     const res: Page<Vehiculo> = (await axios.get(endpoint)).data;
 
     return res;
-
-    /*     const res = (await axios.get(endpoint)).data.content;
-    return res; */
   } catch (e) {
     return new Page();
   }
@@ -65,7 +62,7 @@ export const editVehiculo = async (vehiculo: Vehiculo): Promise<Vehiculo> => {
 
 export const deleteVehiculo = async (id: number): Promise<Vehiculo> => {
   try {
-    return (await axios.put(`${API}/${id}`)).data;
+    return (await axios.delete(`${API}/${id}`)).data;
   } catch (e) {
     return initialStateVehiculo;
   }

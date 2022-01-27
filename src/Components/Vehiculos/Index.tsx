@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Pagination, Row } from "react-bootstrap";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
   addVehiculo as addVehiculoAction,
@@ -7,20 +7,29 @@ import {
   updateVehiculo as updateVehiculoAction,
   getVehiculosAsync,
   selectVehiculos,
+  setVehiculos,
 } from "../../features/slices/vehiculosSlice";
 import Vehiculo, { initialStateVehiculo } from "../../Models/Vehiculo";
 import { CREATE, VIEW } from "../../features/constants/FormVisualizationTypes";
 import TableVehiculos from "./TableVehiculos";
 import ModalVehiculos from "./ModalVehiculos";
+import { getVehiculos } from "../../Services/vehiculosService";
+import Page from "../../Models/Page";
 
 const Index = () => {
-  const vehiculos = useAppSelector(selectVehiculos);
   const dispatch = useAppDispatch();
+  const vehiculos = useAppSelector(selectVehiculos);
+
+  /* PAGINATION */
+  const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
+  const [page, setPage] = useState<Page<Vehiculo>>(new Page());
 
   /* Modal */
   const [modalVehiculo, setModalVehiculo] =
     useState<Vehiculo>(initialStateVehiculo);
   const [visibleModal, setVisibleModal] = useState(false);
+
+  /* VISUALIZATION MODE */
   const [modo, setModo] = useState(VIEW);
   const showModalVehiculo = (modo: string, v?: Vehiculo) => {
     setModalVehiculo(v ? v : initialStateVehiculo);
@@ -29,11 +38,33 @@ const Index = () => {
   };
   const closeModal = () => setVisibleModal(false);
 
-  /* Table */
   useEffect(() => {
-    //Carga de vehiculos
-    const page = dispatch(getVehiculosAsync(vehiculos));
-  }, []);
+    const promisePage = getVehiculos(currentPageNumber, 10, "");
+    Promise.all([promisePage]).then(([pageVehiculos]) => {
+      setPage(pageVehiculos);
+      dispatch(setVehiculos(pageVehiculos.content));
+    });
+
+    /*     dispatch(
+      getVehiculosAsync({
+        vehiculos,
+        pageNumber: currentPage,
+        pageSize: 10,
+        sortBy: "",
+      })
+    ); */
+    return () => {};
+  }, [currentPageNumber, page.numberOfElements]);
+
+  let active = currentPageNumber + 1;
+  let items = [];
+  for (let number = 1; number <= page.totalPages; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   return (
     <div>
@@ -68,13 +99,20 @@ const Index = () => {
           </Col>
         </Row>
 
-        <Button
-          onClick={() => {
-            showModalVehiculo(CREATE);
-          }}
-        >
-          Abrir modal
-        </Button>
+        <Pagination>
+          <Pagination.Prev
+            onClick={() => {
+              setCurrentPageNumber(currentPageNumber - 1);
+            }}
+          />
+          {items}
+
+          <Pagination.Next
+            onClick={() => {
+              setCurrentPageNumber(currentPageNumber + 1);
+            }}
+          />
+        </Pagination>
       </Container>
     </div>
   );

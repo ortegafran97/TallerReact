@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Vehiculo, { initialStateVehiculo } from "../../Models/Vehiculo";
 import Contacto, { initialState } from "../../Models/Contacto";
 import * as formTypes from "../../features/constants/FormVisualizationTypes";
@@ -12,14 +12,13 @@ import {
 import {
   Button,
   Col,
-  Dropdown,
   Form,
   FormControl,
   InputGroup,
   Modal,
   Row,
 } from "react-bootstrap";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import { selectContactos } from "../../features/contactos/contactosSlice";
 
 interface Props {
   vehiculo: Vehiculo;
@@ -36,40 +35,44 @@ const ModalVehiculos = ({
   closeModal,
   setNewVehiculo,
 }: Props) => {
-  const [contacto, setContacto] = useState(initialState);
+  const [contacto, setContacto] = useState<Contacto>(initialState);
+  const [nombreContacto, setNombreContacto] = useState<string>("");
+  const [listaContactos, setListaContactos] = useState<Contacto[]>([]);
+
+  const contactos = useAppSelector(selectContactos);
   const dispatch = useAppDispatch();
   let disabled = false;
 
   let titulo = "Datos de vehiculo";
   switch (modo) {
     case formTypes.CREATE:
-      titulo = "Crear contacto";
+      titulo = "Agregar vehiculo";
       // setDisabled(false);
       disabled = false;
       break;
 
     case formTypes.EDIT:
-      titulo = "Editar contacto";
+      titulo = "Editar vehiculo";
       // setDisabled(false);
       disabled = false;
 
       break;
 
     case formTypes.DELETE:
-      titulo = "Eliminar contacto";
+      titulo = "Eliminar vehiculo";
       // setDisabled(true);
       disabled = true;
 
       break;
 
     case formTypes.VIEW:
-      titulo = "Datos de contacto";
+      titulo = "Datos de vehiculo";
       disabled = true;
       // setDisabled(true);
       break;
 
     default:
-      titulo = "Datos de contacto";
+      titulo = "Datos de vehiculo";
       disabled = false;
       break;
   }
@@ -90,19 +93,30 @@ const ModalVehiculos = ({
     };
   }, []);
 
+  /* Handlers */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewVehiculo({ ...vehiculo, [e.target.name]: e.target.value });
+    switch (e.target.id) {
+      case "inputContacto":
+        setNombreContacto(e.target.value);
+        break;
+
+      default:
+        setNewVehiculo({ ...vehiculo, [e.target.name]: e.target.value });
+        break;
+    }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     switch (modo) {
       case formTypes.CREATE:
-        dispatch(addVehiculo(await service.createVehiculo(vehiculo)));
+        const resCreate = await service.createVehiculo(vehiculo);
+        if (resCreate) dispatch(addVehiculo(resCreate));
         break;
 
       case formTypes.EDIT:
-        dispatch(updateVehiculo(await service.editVehiculo(vehiculo)));
+        const resEdit = await service.editVehiculo(vehiculo);
+        if (resEdit) dispatch(updateVehiculo(resEdit));
         break;
 
       case formTypes.DELETE:
@@ -117,21 +131,14 @@ const ModalVehiculos = ({
     closeModal();
   };
 
-  const [listaContactos, setListaContactos] = useState<Contacto[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-
-  const showContactos = (e: any) => {
-    const value: string = e.target.value.toString().toLocaleLowerCase();
-    if (value.trim() == "") return [];
-    let res = nombres.filter(
-      (i) =>
-        i.apellido.toLocaleLowerCase().startsWith(value) ||
-        i.nombre.toLocaleLowerCase().startsWith(value) ||
-        i.apellido.concat(` ${i.nombre}`).toLocaleLowerCase().includes(value) ||
-        i.nombre.concat(` ${i.apellido}`).toLocaleLowerCase().includes(value)
+  const aplicarContacto = (e: React.MouseEvent) => {
+    const x = contactos.find(
+      (e) => e.nombre.concat(" " + e.apellido) === nombreContacto
     );
-    setListaContactos(res);
-    console.log(listaContactos);
+    if (x) {
+      // setContacto(x);
+      setNewVehiculo({ ...vehiculo, contacto: x });
+    }
   };
 
   return (
@@ -203,34 +210,32 @@ const ModalVehiculos = ({
           <h3>Info de Contacto</h3>
 
           {[formTypes.EDIT, formTypes.CREATE].includes(modo) ? (
-            <Dropdown
-              show={showSuggestions}
-              onFocus={() => {
-                if (listaContactos.length > 0) setShowSuggestions(true);
-                else setShowSuggestions(false);
-              }}
-            >
-              <InputGroup className="mb-3">
+            <div>
+              <InputGroup>
                 <FormControl
-                  placeholder="Buscar contacto..."
-                  aria-label="Buscar contacto..."
-                  aria-describedby="basic-addon2"
-                  onKeyUp={showContactos}
+                  list="contactos"
+                  id="inputContacto"
+                  onChange={handleChange}
+                  value={nombreContacto}
                 />
-                <Button variant="outline-warning" id="button-addon2">
+                <Button
+                  variant="outline-warning"
+                  id="btAplicarContacto"
+                  onClick={aplicarContacto}
+                >
                   Aplicar
                 </Button>
+                <datalist id="contactos">
+                  {contactos.map((i) => {
+                    return (
+                      <option key={i.id}>
+                        {i.nombre} {i.apellido}
+                      </option>
+                    );
+                  })}
+                </datalist>
               </InputGroup>
-              <Dropdown.Menu>
-                {listaContactos.map((i) => {
-                  return (
-                    <Dropdown.Item key={i.id} href="#/action-1">
-                      {i.apellido} {i.nombre}
-                    </Dropdown.Item>
-                  );
-                })}
-              </Dropdown.Menu>
-            </Dropdown>
+            </div>
           ) : (
             <></>
           )}
