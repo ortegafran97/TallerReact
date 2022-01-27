@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import {
   addContacto,
   deleteContacto,
@@ -18,7 +18,6 @@ import { CREATE, VIEW } from "../../features/constants/FormVisualizationTypes";
 export function Contactos() {
   /* Redux */
   const contactos = useAppSelector(selectContactos);
-  const dispatch = useAppDispatch();
 
   /* Modal */
   const [modalContacto, setModalContacto] = useState<Contacto>(initialState);
@@ -30,11 +29,6 @@ export function Contactos() {
     setVisibleModal(true);
   };
   const closeModal = () => setVisibleModal(false);
-
-  /* Carga CONTACTOS al inicio */
-  useEffect(() => {
-    dispatch(getContactosAsync(contactos));
-  }, []);
 
   return (
     <div>
