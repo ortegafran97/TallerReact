@@ -119,6 +119,7 @@ const ModalContacto = ({
               value={contacto.nombre || ""}
               onChange={handleChange}
               disabled={disabled}
+              tabIndex={1}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="apellido">
@@ -129,7 +130,8 @@ const ModalContacto = ({
               placeholder="Ingrese apellido"
               value={contacto.apellido || ""}
               onChange={handleChange}
-              disabled={disabled}
+              disabled={disabled} 
+              tabIndex={2}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="telefono">
@@ -141,6 +143,7 @@ const ModalContacto = ({
               value={contacto.telefono || ""}
               onChange={handleChange}
               disabled={disabled}
+              tabIndex={3}
             />
           </Form.Group>
         </Modal.Body>
