@@ -102,14 +102,16 @@ const Index = () => {
         <Pagination>
           <Pagination.Prev
             onClick={() => {
-              setCurrentPageNumber(currentPageNumber - 1);
+              if (currentPageNumber > 0)
+                setCurrentPageNumber(currentPageNumber - 1);
             }}
           />
           {items}
 
           <Pagination.Next
             onClick={() => {
-              setCurrentPageNumber(currentPageNumber + 1);
+              if (currentPageNumber < page.totalPages - 1)
+                setCurrentPageNumber(currentPageNumber + 1);
             }}
           />
         </Pagination>
