@@ -18,6 +18,7 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route path="contactos" element={<Contactos />} />
             <Route path="vehiculos" element={<Vehiculos />} />
+            <Route path="ingresos" element={<Vehiculos />} />
             <Route path="test" element={<></>} />
           </Route>
         </Routes>
