@@ -2,7 +2,7 @@ import Vehiculo from "./Vehiculo";
 import ItemIngreso from "./ItemIngreso";
 
 interface Ingreso {
-  id?: Number;
+  id: number;
   ingreso: Date;
   egreso?: Date;
   items?: ItemIngreso[];
@@ -10,7 +10,7 @@ interface Ingreso {
 }
 
 export const initialStateIngreso: Ingreso = {
-  id: undefined,
+  id: -1,
   vehiculo: undefined,
   ingreso: new Date(),
 };

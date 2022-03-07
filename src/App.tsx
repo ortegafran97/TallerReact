@@ -14,16 +14,23 @@ import {
   getContactosAsync,
   selectContactos,
 } from "./features/contactos/contactosSlice";
+import {
+  getIngresoAsync,
+  selectIngresos,
+} from "./features/slices/ingresosSlice";
 // import { Modal } from "react-bootstrap";
 
 function App() {
   const dispatch = useAppDispatch();
   const vehiculos = useAppSelector(selectVehiculos);
   const contactos = useAppSelector(selectContactos);
+  const ingresos = useAppSelector(selectIngresos);
 
   useEffect(() => {
     dispatch(getVehiculosAsync({ vehiculos }));
-    dispatch(getContactosAsync(contactos));
+    // dispatch(getContactosAsync(contactos));
+    dispatch(getContactosAsync([]));
+    dispatch(getIngresoAsync([]));
   }, []);
 
   return (

@@ -22,9 +22,10 @@ export const getIngresos = async (
       endpoint = endpoint.concat(`&pageNumber=${pageNumber}`);
 
     if (sortBy !== undefined) endpoint = endpoint.concat(`&sortBy=${sortBy}`);
-    else endpoint = endpoint.concat(`&sortBy=apellido`);
+    else endpoint = endpoint.concat(`&sortBy=-fechaIngreso`);
 
     const res: Page<Ingreso> = (await axios.get(endpoint)).data;
+
     return res;
   } catch (e) {
     return new Page();

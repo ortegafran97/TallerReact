@@ -6,6 +6,7 @@ import ItemIngreso from "../../Models/ItemIngreso";
 
 import { getIngresos } from "../../Services/ingresosService";
 import { stat } from "fs";
+import vehiculosSlice from "./vehiculosSlice";
 
 export interface IngresoState {
   value: Ingreso[];
@@ -41,6 +42,9 @@ export const ingresosSlice = createSlice({
         return v.id !== action.payload.id ? v : action.payload;
       });
     },
+    setIngresos: (state, action) => {
+      state.value = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,3 +60,10 @@ export const ingresosSlice = createSlice({
       );
   },
 });
+
+export const { addIngreso, updateIngreso, deleteIngreso, setIngresos } =
+  ingresosSlice.actions;
+
+export const selectIngresos = (state: RootState) => state.ingresos.value;
+
+export default ingresosSlice.reducer;
