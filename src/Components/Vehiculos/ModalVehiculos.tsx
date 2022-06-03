@@ -19,6 +19,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { selectContactos } from "../../features/contactos/contactosSlice";
+import DatosContacto from "../Contactos/DatosContacto";
 
 interface Props {
   vehiculo: Vehiculo;
@@ -242,39 +243,7 @@ const ModalVehiculos = ({
 
           {vehiculo.contacto ? (
             <>
-              <Row>
-                <Col>
-                  <Form.Group className="mb-3" controlId="nombreContacto">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control
-                      name="modelo"
-                      type="text"
-                      value={vehiculo.contacto.nombre || ""}
-                      disabled
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Label>Apellido</Form.Label>
-                  <Form.Control
-                    name="modelo"
-                    type="text"
-                    value={vehiculo.contacto.apellido || ""}
-                    disabled
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Label>Telefono</Form.Label>
-                  <Form.Control
-                    name="modelo"
-                    type="text"
-                    value={vehiculo.contacto.telefono || ""}
-                    disabled
-                  />
-                </Col>
-              </Row>
+              <DatosContacto title="titulo" data={vehiculo.contacto} />
             </>
           ) : (
             <></>
