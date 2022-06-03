@@ -15,6 +15,7 @@ import TableVehiculos from "./TableVehiculos";
 import ModalVehiculos from "./ModalVehiculos";
 import { getVehiculos } from "../../Services/vehiculosService";
 import Page from "../../Models/Page";
+import ModalCambioPropietario from "./ModalCambioPropietario";
 
 const Index = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,10 @@ const Index = () => {
     useState<Vehiculo>(initialStateVehiculo);
   const [visibleModal, setVisibleModal] = useState(false);
 
+  const [modalCambioProp, setModalCambioProp] =
+    useState<Vehiculo>(initialStateVehiculo);
+  const [visibleCambioProp, setVisibleCambioProp] = useState(false);
+
   /* VISUALIZATION MODE */
   const [modo, setModo] = useState(VIEW);
   const showModalVehiculo = (modo: string, v?: Vehiculo) => {
@@ -37,6 +42,14 @@ const Index = () => {
     setVisibleModal(true);
   };
   const closeModal = () => setVisibleModal(false);
+
+  const showModalCambioProp = (v?: Vehiculo) => {
+    setModalCambioProp(v ? v : initialStateVehiculo);
+    setVisibleCambioProp(true);
+  };
+  const closeCambioProp = () => {
+    setVisibleCambioProp(false);
+  };
 
   useEffect(() => {
     const promisePage = getVehiculos(currentPageNumber, 10, "");
@@ -75,6 +88,15 @@ const Index = () => {
         closeModal={closeModal}
         setNewVehiculo={setModalVehiculo}
       />
+
+      <ModalCambioPropietario
+        vehiculo={modalCambioProp}
+        show={visibleCambioProp}
+        closeModal={() => {
+          closeCambioProp();
+        }}
+      />
+
       <Container>
         <Row>
           <Col>
@@ -95,6 +117,7 @@ const Index = () => {
             <TableVehiculos
               vehiculos={vehiculos}
               showModal={showModalVehiculo}
+              showCambioProp={showModalCambioProp}
             />
           </Col>
         </Row>

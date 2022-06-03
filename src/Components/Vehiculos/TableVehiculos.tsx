@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState, VoidFunctionComponent } from "react";
 import { Table } from "react-bootstrap";
-import { Pencil, Tools, Trash } from "react-bootstrap-icons";
-import Vehiculo from "../../Models/Vehiculo";
+import { Pencil, Tools, Trash, Person } from "react-bootstrap-icons";
+import Vehiculo, { initialStateVehiculo } from "../../Models/Vehiculo";
 import * as FormViewType from "../../features/constants/FormVisualizationTypes";
+import DatosContacto from "../Contactos/DatosContacto";
+import ModalCambioPropietario from "./ModalCambioPropietario";
 
 interface Props {
   vehiculos: Vehiculo[];
+  showCambioProp: (vehiculo?: Vehiculo) => void;
   showModal: (modo: string, c?: Vehiculo) => void;
 }
 
-const TableVehiculos = ({ vehiculos, showModal }: Props) => {
+const TableVehiculos = ({ vehiculos, showModal, showCambioProp }: Props) => {
   if (!vehiculos) vehiculos = [];
 
   return (
@@ -21,7 +24,7 @@ const TableVehiculos = ({ vehiculos, showModal }: Props) => {
             <th>Patente</th>
             <th>Marca</th>
             <th>Modelo</th>
-            <th>Dueño</th>
+            <th>Propietario</th>
             <th>
               <Tools />
             </th>
@@ -54,6 +57,11 @@ const TableVehiculos = ({ vehiculos, showModal }: Props) => {
                   <Trash
                     onClick={() => {
                       showModal(FormViewType.DELETE, v);
+                    }}
+                  />
+                  <Person
+                    onClick={() => {
+                      showCambioProp(v);
                     }}
                   />
                 </td>
