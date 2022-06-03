@@ -21,7 +21,7 @@ const initialState: IngresoState = {
 export const getIngresoAsync = createAsyncThunk(
   "ingresos/fetchIngresos",
   async (ingresos: Ingreso[]) => {
-    const res = await getIngresos();
+    const res = await getIngresos(0, 100, undefined);
     return res.content;
   }
 );
