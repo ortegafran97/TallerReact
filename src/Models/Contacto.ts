@@ -1,12 +1,12 @@
 interface Contacto {
-  id?: number;
+  id?: number | undefined;
   nombre: string;
   apellido: string;
   telefono: string;
 }
 
 export let initialState: Contacto = {
-  id: 0,
+  id: undefined,
   nombre: "",
   apellido: "",
   telefono: "",
