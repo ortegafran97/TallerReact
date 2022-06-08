@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Contactos } from "./Components/Contactos/Index";
 import Ingresos from "./Components/Ingresos/Index";
 import Vehiculos from "./Components/Vehiculos/Index";
+import NewIngreso from "./Components/Ingresos/NewIngreso/NewIngreso";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.render(
             <Route path="contactos" element={<Contactos />} />
             <Route path="vehiculos" element={<Vehiculos />} />
             <Route path="ingresos" element={<Ingresos />} />
+            <Route path="newIngreso" element={<NewIngreso />} />
             <Route path="test" element={<></>} />
           </Route>
         </Routes>

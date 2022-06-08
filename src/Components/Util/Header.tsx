@@ -13,7 +13,9 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Mecanica Ortega</Navbar.Brand>
+        <Navbar.Brand /* href="/" */>
+          <Link className="nav-link active" aria-current="page" to="/">Mecanica Ortega</Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -41,6 +43,13 @@ const Header = () => {
             >
               Vehiculos
             </Link>
+            <Link
+              className="nav-link active"
+              aria-current="page"
+              to="/newIngreso"
+            >
+              Nuevo Ingreso
+            </Link>
             <Link className="nav-link active" aria-current="page" to="/test">
               Test
             </Link>
@@ -52,6 +61,8 @@ const Header = () => {
           <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
         </NavDropdown> */}
           </Nav>
+
+          {/* TODO: implement Search */}
           <Form className="d-flex">
             <FormControl
               type="search"
