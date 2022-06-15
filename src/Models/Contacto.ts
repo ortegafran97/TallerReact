@@ -5,7 +5,7 @@ interface Contacto {
   telefono: string;
 }
 
-export let initialState: Contacto = {
+export let initialStateContacto: Contacto = {
   id: undefined,
   nombre: "",
   apellido: "",

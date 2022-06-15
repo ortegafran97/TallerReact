@@ -10,7 +10,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { selectContactos } from "../../features/contactos/contactosSlice";
-import Contacto, { initialState } from "../../Models/Contacto";
+import Contacto, { initialStateContacto } from "../../Models/Contacto";
 import Vehiculo from "../../Models/Vehiculo";
 import DatosContacto from "../Contactos/DatosContacto";
 import * as service from "../../Services/vehiculosService";
@@ -30,7 +30,7 @@ const ModalCambioPropietario = ({ vehiculo, show, closeModal }: Props) => {
 
   /* States */
   const [nombreContacto, setNombreContacto] = useState<string>("");
-  const [newPropietario, setNewPropietario] = useState<Contacto>(initialState);
+  const [newPropietario, setNewPropietario] = useState<Contacto>(initialStateContacto);
 
   /* Handlers */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +49,7 @@ const ModalCambioPropietario = ({ vehiculo, show, closeModal }: Props) => {
     if (resEdit) {
       dispatch(updateVehiculo(resEdit));
       setNombreContacto("");
-      setNewPropietario(initialState);
+      setNewPropietario(initialStateContacto);
       closeModal();
     }
   };
@@ -112,7 +112,7 @@ const ModalCambioPropietario = ({ vehiculo, show, closeModal }: Props) => {
               variant="secondary"
               onClick={() => {
                 setNombreContacto("");
-                setNewPropietario(initialState);
+                setNewPropietario(initialStateContacto);
                 closeModal();
               }}
             >

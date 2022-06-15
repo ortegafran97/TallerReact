@@ -13,7 +13,7 @@ import {
 import SectionPropietario from "./SectionPropietario";
 import SectionVehiculo from "./SectionVehiculo";
 import Vehiculo, { initialStateVehiculo } from "../../../Models/Vehiculo";
-import Contacto, { initialState } from "../../../Models/Contacto";
+import Contacto, { initialStateContacto } from "../../../Models/Contacto";
 import { initialStateIngreso } from "../../../Models/Ingreso";
 
 //TODO: submit -> checkear que el vehiculo ingresado no existe y reemplazarlo caso de ser necesario
@@ -22,7 +22,7 @@ const NewIngreso = () => {
   const [vehiculoIngr, setVehiculoIngr] =
     useState<Vehiculo>(initialStateVehiculo);
   const [propietarioIngr, setPropietarioIngr] =
-    useState<Contacto>(initialState);
+    useState<Contacto>(initialStateContacto);
 
   /* HANDLERS */
   const handleSubmit = (e: any) => {

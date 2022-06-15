@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import Contacto, { initialState } from "../../Models/Contacto";
+import Contacto, { initialStateContacto } from "../../Models/Contacto";
 import * as formTypes from "../../features/constants/FormVisualizationTypes";
 
 import { useAppDispatch } from "../../app/hooks";

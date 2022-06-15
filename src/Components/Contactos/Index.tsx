@@ -8,7 +8,7 @@ import {
   selectContactos,
   getContactosAsync,
 } from "../../features/contactos/contactosSlice";
-import Contacto, { initialState } from "../../Models/Contacto";
+import Contacto, { initialStateContacto } from "../../Models/Contacto";
 import ModalContacto from "./ModalContacto";
 
 import TableContactos from "./TableContactos";
@@ -20,11 +20,11 @@ export function Contactos() {
   const contactos = useAppSelector(selectContactos);
 
   /* Modal */
-  const [modalContacto, setModalContacto] = useState<Contacto>(initialState);
+  const [modalContacto, setModalContacto] = useState<Contacto>(initialStateContacto);
   const [visibleModal, setVisibleModal] = useState(false);
   const [modo, setModo] = useState(VIEW);
   const showModalContacto = (modo: string, c?: Contacto) => {
-    setModalContacto(c ? c : initialState);
+    setModalContacto(c ? c : initialStateContacto);
     setModo(modo);
     setVisibleModal(true);
   };

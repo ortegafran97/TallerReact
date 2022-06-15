@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import Contacto, { initialState } from "../Models/Contacto";
+import Contacto, { initialStateContacto } from "../Models/Contacto";
 
 // import config from "../../config";
 // import Contacto from "../Models/Contacto";
@@ -37,7 +37,7 @@ export const getContactoById = async (id: Number): Promise<Contacto> => {
     const res = await axios.get(`${API}/${id}`);
     return res.data.content[0];
   } catch (e) {
-    return initialState;
+    return initialStateContacto;
   }
 };
 
@@ -51,7 +51,7 @@ export const editContacto = async (contacto: Contacto): Promise<Contacto> => {
     const res = await axios.put(`${API}/${contacto.id}`, contacto, {});
     return res.data;
   } catch (e) {
-    return initialState;
+    return initialStateContacto;
   }
 };
 
@@ -60,6 +60,6 @@ export const deleteContacto = async (id: Number): Promise<Contacto> => {
     const res = await axios.delete(`${API}/${id}`);
     return res.data;
   } catch (e) {
-    return initialState;
+    return initialStateContacto;
   }
 };

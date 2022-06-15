@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Vehiculo, { initialStateVehiculo } from "../../Models/Vehiculo";
-import Contacto, { initialState } from "../../Models/Contacto";
+import Contacto, { initialStateContacto } from "../../Models/Contacto";
 import * as formTypes from "../../features/constants/FormVisualizationTypes";
 import * as service from "../../Services/vehiculosService";
 import {
@@ -36,7 +36,7 @@ const ModalVehiculos = ({
   closeModal,
   setNewVehiculo,
 }: Props) => {
-  const [contacto, setContacto] = useState<Contacto>(initialState);
+  const [contacto, setContacto] = useState<Contacto>(initialStateContacto);
   const [nombreContacto, setNombreContacto] = useState<string>("");
   const [listaContactos, setListaContactos] = useState<Contacto[]>([]);
 

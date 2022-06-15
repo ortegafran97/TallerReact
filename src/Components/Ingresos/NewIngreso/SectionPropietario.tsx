@@ -3,7 +3,7 @@ import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useAppSelector } from "../../../app/hooks";
 import { selectContactos } from "../../../features/contactos/contactosSlice";
-import Contacto, { initialState } from "../../../Models/Contacto";
+import Contacto, { initialStateContacto } from "../../../Models/Contacto";
 
 interface Props {
   propietario: Contacto;
