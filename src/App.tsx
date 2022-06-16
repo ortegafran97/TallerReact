@@ -28,9 +28,8 @@ function App() {
 
   useEffect(() => {
     dispatch(getVehiculosAsync({ vehiculos }));
-    // dispatch(getContactosAsync(contactos));
-    dispatch(getContactosAsync([]));
-    dispatch(getIngresoAsync([]));
+    dispatch(getContactosAsync(contactos));
+    dispatch(getIngresoAsync(ingresos));
   }, []);
 
   return (
